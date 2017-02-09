@@ -1,0 +1,3 @@
+home_ticket_store:
+    path:     /
+    defaults: { _controller: MDLCoreBundle:Main:home }

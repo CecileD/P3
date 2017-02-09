@@ -1,0 +1,4 @@
+mdl_core:
+    resource: "@MDLCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
