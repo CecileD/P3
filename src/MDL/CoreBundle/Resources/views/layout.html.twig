@@ -27,17 +27,17 @@
                         </button>
                         <div class="row">
                             <div class="col-md-3">
-                                <img class="navbar-brand" src="{{ asset('img/logo.jpg') }}"/>
+                                <a href="{{ path('mdl_core_home') }}"><img class="navbar-brand" src="{{ asset('img/logo.jpg') }}"/></a>
                             </div>
                             <div class="col-md-9">
-                                <a class="navbar-brand" href="#"> Musée du Louvre - Billetterie</a>
+                                <a class="navbar-brand" href="{{ path('mdl_core_home') }}"> Musée du Louvre - Billetterie</a>
                             </div>
                         </div>
                     </div>
                     <div class="collapse navbar-collapse col-lg-8 col-md-7 col-sm-5 col-xs-12">
                         <ul class="nav navbar-nav">
-                            <li class="active"> <a href="#">Accueil</a> </li>
-                            <li> <a href="#">Billetterie</a> </li>
+                            <li class="active"> <a href="{{ path('mdl_core_home') }}">Accueil</a> </li>
+                            <li> <a href="{{ path('mdl_core_registration') }}">Billetterie</a> </li>
                         </ul>
                     </div>
                 </div>

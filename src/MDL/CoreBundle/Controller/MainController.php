@@ -18,4 +18,10 @@ class MainController extends Controller
         $content = $this->get('templating')->render('MDLCoreBundle:Home:index.html.twig');
         return new Response($content);
     }
+
+    public function registrationAction()
+    {
+        $content = $this->get('templating')->render('MDLCoreBundle:Registration:registration.html.twig');
+        return new Response($content);
+    }
 }

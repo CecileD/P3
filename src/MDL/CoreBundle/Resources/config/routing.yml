@@ -1,3 +1,7 @@
-home_ticket_store:
+mdl_core_home:
     path:     /
     defaults: { _controller: MDLCoreBundle:Main:home }
+
+mdl_core_registration:
+    path:     /registration
+    defaults: { _controller: MDLCoreBundle:Main:registration }
