@@ -4,11 +4,46 @@
     Billetterie - {{ parent() }}
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+
+{% endblock %}
+
 {% block body %}
 
     <h2 class ="text-center">Billetterie du musée du Louvre</h2>
 
     <p>Veuillez entrer les champs suivants pour réserver vos places pour visiter le musée du Louvre :</p>
+
+    <div class="well">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+        {# Les erreurs générales du formulaire. #}
+        {{ form_errors(form) }}
+
+        {# Génération du label + error + widget pour un champ. #}
+        {{ form_row(form.email) }}
+        {{ form_row(form.date) }}
+        <div id="date_selected"></div>
+        <div id="datepicker"></div>
+
+
+
+        {{ form_rest(form) }}
+
+        {# Fermeture de la balise <form> du formulaire HTML #}
+        {{ form_end(form) }}
+    </div>
+{% block javascripts %}
+    {{ parent() }}
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.fr.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/calendar.js') }}"></script>
+
+{% endblock %}
 
 
 {% endblock %}
