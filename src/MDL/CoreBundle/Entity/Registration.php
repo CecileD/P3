@@ -50,6 +50,21 @@ class Registration
     private $registrationCode;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="nb_ticket", type="integer")
+     */
+    private $nbTicket;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ticket_duration", type="string", length=255)
+     */
+    private $ticketDuration;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -156,4 +171,52 @@ class Registration
     }
 
 
+
+    /**
+     * Set nbTicket
+     *
+     * @param int $nbTicket
+     *
+     * @return Registration
+     */
+    public function setNbTicket($nbTicket)
+    {
+        $this->nbTicket = $nbTicket;
+
+        return $this;
+    }
+
+    /**
+     * Get nbTicket
+     *
+     * @return int
+     */
+    public function getNbTicket()
+    {
+        return $this->nbTicket;
+    }
+
+    /**
+     * Set ticketDuration
+     *
+     * @param string $ticketDuration
+     *
+     * @return Registration
+     */
+    public function setTicketDuration($ticketDuration)
+    {
+        $this->ticketDuration = $ticketDuration;
+
+        return $this;
+    }
+
+    /**
+     * Get ticketDuration
+     *
+     * @return string
+     */
+    public function getTicketDuration()
+    {
+        return $this->ticketDuration;
+    }
 }

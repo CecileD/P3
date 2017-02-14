@@ -50,6 +50,21 @@ class Registration
     private $registrationCode;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nb_ticket", type="int")
+     */
+    private $nbTicket;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="ticket_duration", type="string", length=255, unique=true)
+     */
+    private $ticketDuration;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -155,27 +170,5 @@ class Registration
         return $this->registrationCode;
     }
 
-    /**
-     * Set visitor
-     *
-     * @param \MDL\CoreBundle\Entity\Visitor $visitor
-     *
-     * @return Registration
-     */
-    public function setVisitor(\MDL\CoreBundle\Entity\Visitor $visitor = null)
-    {
-        $this->visitor = $visitor;
 
-        return $this;
-    }
-
-    /**
-     * Get visitor
-     *
-     * @return \MDL\CoreBundle\Entity\Visitor
-     */
-    public function getVisitor()
-    {
-        return $this->visitor;
-    }
 }

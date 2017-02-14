@@ -2,6 +2,8 @@ $(function()
 {
     var currentDate = new Date();
 
+
+    //Configuration du calendrier (langue, date désactivés
     $('#datepicker').datepicker(
         {
             language :"fr-FR",
@@ -17,9 +19,7 @@ $(function()
         $('#date_selected').text(
             $('#datepicker').datepicker('getFormattedDate')
         );
-    });
-    $('#registration_date').change(function ()
-    {
+        $('select').css('display','');
 
     });
 });
