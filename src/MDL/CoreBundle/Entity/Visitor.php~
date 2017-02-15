@@ -50,16 +50,16 @@ class Visitor
     private $dateOfBirth;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MDL\CoreBundle\Entity\Registration")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $registration;
-
-    /**
      * @ORM\ManyToOne(targetEntity="MDL\CoreBundle\Entity\Pricing")
      * @ORM\JoinColumn(nullable=false)
      */
     private $price;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="MDL\CoreBundle\Entity\Registration", inversedBy="visitors")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $registration;
 
     /**
      * Get id
@@ -168,26 +168,26 @@ class Visitor
     }
 
     /**
-     * Set registration
+     * Set price
      *
-     * @param string $registration
+     * @param \MDL\CoreBundle\Entity\Pricing $price
      *
      * @return Visitor
      */
-    public function setRegistration($registration)
+    public function setPrice(\MDL\CoreBundle\Entity\Pricing $price)
     {
-        $this->registration = $registration;
+        $this->price = $price;
 
         return $this;
     }
 
     /**
-     * Get registration
+     * Get price
      *
-     * @return string
+     * @return \MDL\CoreBundle\Entity\Pricing
      */
-    public function getRegistration()
+    public function getPrice()
     {
-        return $this->registration;
+        return $this->price;
     }
 }

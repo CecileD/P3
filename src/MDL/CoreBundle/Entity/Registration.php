@@ -63,6 +63,10 @@ class Registration
      */
     private $ticketDuration;
 
+    /**
+     * @ORM\OneToMany(targetEntity="MDL\CoreBundle\Entity\Visitor", mappedBy="registration")
+     */
+    private $visitors;
 
     /**
      * Get id
@@ -218,5 +222,46 @@ class Registration
     public function getTicketDuration()
     {
         return $this->ticketDuration;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->visitors = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add visitor
+     *
+     * @param \MDL\CoreBundle\Entity\Visitor $visitor
+     *
+     * @return Registration
+     */
+    public function addVisitor(\MDL\CoreBundle\Entity\Visitor $visitor)
+    {
+        $this->visitors[] = $visitor;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitor
+     *
+     * @param \MDL\CoreBundle\Entity\Visitor $visitor
+     */
+    public function removeVisitor(\MDL\CoreBundle\Entity\Visitor $visitor)
+    {
+        $this->visitors->removeElement($visitor);
+    }
+
+    /**
+     * Get visitors
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisitors()
+    {
+        return $this->visitors;
     }
 }

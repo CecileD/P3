@@ -20,6 +20,8 @@ $(function()
         if($('#datepicker').datepicker('getFormattedDate') == formatedDate && now.getHours()>=14 )
         {
             $("select option:contains('Journée')").attr("disabled","disabled");
+        }else{
+            $("select option:contains('Journée')").prop("disabled", false);
         }
     });
 });
