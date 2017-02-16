@@ -5,7 +5,7 @@ $(function()
         var $container = $('div#mdl_corebundle_registration_visitors');
 
         // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-        var index = $container.find(':input').length;
+        var index = $('#mdl_corebundle_registration_visitors').children().length;
 
         // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
         if (index == 0) {
@@ -13,7 +13,7 @@ $(function()
         }
 
         // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-        $('#add_visitor').click(function(e) {
+        $('#add_visitor').unbind("click").click(function(e) {
             addVisitor($container);
             e.preventDefault(); // évite qu'un # apparaisse dans l'URL
             return false;
@@ -42,6 +42,7 @@ $(function()
 
             // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
             index++;
+
         }
 
         // La fonction qui ajoute un lien de suppression d'une catégorie

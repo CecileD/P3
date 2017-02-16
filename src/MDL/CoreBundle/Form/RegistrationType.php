@@ -52,6 +52,7 @@ class RegistrationType extends AbstractType
                 'allow_delete' => true,
                 'prototype' => true
             ))
+            ->add('save', SubmitType::class)
         ;
     }
     
