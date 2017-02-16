@@ -44,12 +44,8 @@
             </nav>
         </div>
         <div class="container jumbotron">
-            <div class="row ">
-                <div id="content" class="col-md-12">
-                    {% block body %}
-                    {% endblock %}
-                </div>
-            </div>
+            {% block body %}
+            {% endblock %}
 
             <hr>
 
@@ -63,6 +59,5 @@
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
             <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         {% endblock %}
-
     </body>
 </html>

@@ -12,6 +12,7 @@ use MDL\CoreBundle\Entity\Registration;
 use MDL\CoreBundle\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class MainController extends Controller
 {
@@ -21,12 +22,21 @@ class MainController extends Controller
         return new Response($content);
     }
 
-    public function registrationAction()
+    public function registrationAction(Request $request)
     {
         //Création d'une nouvelle réservation
         $registration = new Registration();
         //On créé le formulaire déjà défini dans le fichier RegistrationType
         $form = $this->get('form.factory')->create(RegistrationType::class, $registration);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($registration);
+            $em->flush();
+
+
+            return $this->redirectToRoute('mdl_core_home', array('id' => $registration->getId()));
+        }
 
         return $this->render('MDLCoreBundle:Registration:registration.html.twig', array(
             'form' => $form->createView(),

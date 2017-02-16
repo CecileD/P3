@@ -4,7 +4,7 @@ $(function()
 
 
     //Configuration du calendrier (langue, date désactivés
-    $('.ticket_duration').hide();
+    $('.hidden_zone').hide();
     $('#datepicker').datepicker(
         {
             language :"fr-FR",
@@ -20,7 +20,7 @@ $(function()
         $('#date_selected').text(
             $('#datepicker').datepicker('getFormattedDate')
         );
-        $('.ticket_duration').show();
+        $('.hidden_zone').show();
         $('select').css('display','');
     });
 });
