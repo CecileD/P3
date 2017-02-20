@@ -48,11 +48,15 @@ class RegistrationType extends AbstractType
             ))
             ->add('visitors', CollectionType::class, array(
                 'entry_type'   => VisitorType::class,
+                'label' => 'Visiteurs',
                 'allow_add'    => true,
                 'allow_delete' => true,
                 'prototype' => true
             ))
-            ->add('save', SubmitType::class)
+            ->add('save', SubmitType::class,  array(
+                'attr' => array('class' => 'btn btn-default form-group'),
+                'label' =>'Réserver'
+            ))
         ;
     }
     

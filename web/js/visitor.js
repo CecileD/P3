@@ -1,8 +1,8 @@
 $(function()
 {
-    $(document).ready(function() {
         // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
         var $container = $('div#mdl_corebundle_registration_visitors');
+        //$('div #mdl_corebundle_registration_visitors').after('<div class="form-group" style="margin-top: 10px"><a href="#" id="add_visitor" class="btn btn-default ">Ajouter un visiteur</a></div>');
 
         // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
         var index = $('#mdl_corebundle_registration_visitors').children().length;
@@ -13,7 +13,7 @@ $(function()
         }
 
         // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-        $('#add_visitor').unbind("click").click(function(e) {
+        $('#add_visitor').click(function(e) {
             addVisitor($container);
             e.preventDefault(); // évite qu'un # apparaisse dans l'URL
             return false;
@@ -36,9 +36,9 @@ $(function()
 
             // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
             addDeleteLink($prototype);
-
             // On ajoute le prototype modifié à la fin de la balise <div>
             $container.append($prototype);
+
 
             // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
             index++;
@@ -48,7 +48,7 @@ $(function()
         // La fonction qui ajoute un lien de suppression d'une catégorie
         function addDeleteLink($prototype) {
             // Création du lien
-            var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+            var $deleteLink = $('<div class="col-sm-12"><a href="#" class="btn btn-danger">Supprimer</a></div>');
 
             // Ajout du lien
             $prototype.append($deleteLink);
@@ -61,5 +61,4 @@ $(function()
                 return false;
             });
         }
-    });
 });

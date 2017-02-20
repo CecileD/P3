@@ -5,6 +5,7 @@ $(function()
 
     //Configuration du calendrier (langue, date désactivés
     $('.hidden_zone').hide();
+    //$('div#mdl_corebundle_registration_visitors').hide();
     $('#datepicker').datepicker(
         {
             language :"fr-FR",

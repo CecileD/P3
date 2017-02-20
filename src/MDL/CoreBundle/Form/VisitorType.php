@@ -16,17 +16,25 @@ class VisitorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('lastname', TextType::class)
-            ->add('firstname', TextType::class)
-            ->add('country', TextType::class)
+            ->add('lastname', TextType::class, array(
+                'label' => 'Nom',
+            ))
+            ->add('firstname', TextType::class, array(
+                'label' => 'Prénom',
+            ))
+            ->add('country', TextType::class, array(
+                'label' => 'Pays',
+            ))
             ->add('dateOfBirth', DateType::class, array(
-            'widget' => 'single_text',
+                'label' => 'Date de naissance',
 
-            // Permet de changer le input en champs texte et non date (nécessaire pour le plugin)
-            'html5' => false,
+                'widget' => 'single_text',
 
-            // On ajoute un id pour la sélection jquery
-            'attr' => ['class' => 'date_of_birth'],
+                // Permet de changer le input en champs texte et non date (nécessaire pour le plugin)
+                'html5' => false,
+
+                // On ajoute un id pour la sélection jquery
+                'attr' => ['class' => 'date_of_birth form-control col-sm-10'],
         ));
     }
     

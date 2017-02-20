@@ -17,11 +17,14 @@
 
     <p>Veuillez entrer les champs suivants pour réserver vos places pour visiter le musée du Louvre :</p>
 
-    <div class="well">
-        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
-        {# Les erreurs générales du formulaire. #}
-        {{ form_errors(form) }}
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+    {# Les erreurs générales du formulaire. #}
+    {{ form_errors(form) }}
+
+    <div class="well">
+
 
         {# Génération du label + error + widget pour un champ. #}
         {# Génération manuelle et éclatée : #}
@@ -77,45 +80,24 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div class="row">
-                    <div class="form-group">
-                        {# Génération du label. #}
-                        {{ form_label(form.visitors, "Visiteurs", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
-
-                        {# Affichage des erreurs pour ce champ précis. #}
-                        {{ form_errors(form.visitors) }}
-
-                        <div class="col-sm-12">
-                            {{ form_widget(form.visitors, {'attr': {'class': 'form-control'}}) }}
+                    <div class="form-group test">
+                        <div class="col-sm-12 visitors">
+                            {{ form_widget(form.visitors)}}
                         </div>
                     </div>
+                    <a href="#" id="add_visitor" style="margin-bottom: 10px" class="btn btn-default ">Ajouter un visiteur</a>
                 </div>
-
                 <div class="row">
-                    <div class="form-group">
-                        <a href="#" id="add_visitor" class="btn btn-default">Ajouter un visiteur</a>
+                    <div class="col-sm-12">
+                        {{ form_widget(form.save)}}
                     </div>
                 </div>
-            </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="form-group">
-                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
-            </div>
         </div>
     </div>
+    {{ form_end(form) }}
 
-    </div>
-
-
-
-
-
-    {# Fermeture de la balise <form> du formulaire HTML #}
-        {{ form_end(form) }}
+{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -127,4 +109,3 @@
     <script type="text/javascript" src="{{ asset('js/visitor.js') }}"></script>
 {% endblock %}
 
-{% endblock %}
