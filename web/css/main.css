@@ -13,3 +13,9 @@ h2
     background: rgba(255, 255, 255, 0.90);
 }
 
+.datepicker table tr td.active:active,
+.datepicker table tr td.active.highlighted:active,
+.datepicker table tr td.active.active,
+.datepicker table tr td.active.highlighted.active {
+    background-color: green;
+}

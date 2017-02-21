@@ -48,7 +48,7 @@ $(function()
         // La fonction qui ajoute un lien de suppression d'une catégorie
         function addDeleteLink($prototype) {
             // Création du lien
-            var $deleteLink = $('<div class="col-sm-12"><a href="#" class="btn btn-danger">Supprimer</a></div>');
+            var $deleteLink = $('<div class="col-sm-1"><a href="#" class="btn btn-danger supprimer" id="delete_'+index+'">Supprimer</a></div>');
 
             // Ajout du lien
             $prototype.append($deleteLink);
@@ -57,7 +57,7 @@ $(function()
             $deleteLink.click(function(e) {
                 $prototype.remove();
                 e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                index--;
+                //index--;
                 return false;
             });
         }

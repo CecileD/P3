@@ -32,7 +32,6 @@ class RegistrationType extends AbstractType
                 'html5' => false,
 
                 // On ajoute un id pour la sélection jquery
-                'attr' => ['id' => 'registration_date', 'style' => 'display:none;'],
             ))
             // Ajout du champ de sélection de la validité du ticket (journée ou demi-journée)
             ->add('ticketDuration', ChoiceType::class, array(
@@ -42,9 +41,6 @@ class RegistrationType extends AbstractType
                     'Demi-journée' => 'Demi-journée',
                     'Journée' => 'Journée',
                 ),
-
-                //On cache le champ
-                'attr' => ['style' => 'display:none;'],
             ))
             ->add('visitors', CollectionType::class, array(
                 'entry_type'   => VisitorType::class,
