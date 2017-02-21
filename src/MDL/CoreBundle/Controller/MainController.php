@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
+
 class MainController extends Controller
 {
     public function homeAction()
@@ -29,7 +30,23 @@ class MainController extends Controller
         //On créé le formulaire déjà défini dans le fichier RegistrationType
         $form = $this->get('form.factory')->create(RegistrationType::class, $registration);
 
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('MDLCoreBundle:Pricing')
+        ;
+
+        $listPrices = $repository->findAll();
+
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $registration->setTotalPrice(0);
+            $registration->setRegistrationCode('salut2');
+            $registration->setNbTicket(12);
+            foreach($registration->getVisitors() as $visitor)
+            {
+                $visitor->setPrice($repository->find(1));
+                $visitor->setRegistration($registration);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($registration);
             $em->flush();
@@ -40,6 +57,7 @@ class MainController extends Controller
 
         return $this->render('MDLCoreBundle:Registration:registration.html.twig', array(
             'form' => $form->createView(),
+            'listPrices' => $listPrices,
         ));
 
     }

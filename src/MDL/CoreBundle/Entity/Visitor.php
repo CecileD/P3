@@ -3,6 +3,7 @@
 namespace MDL\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Visitor
@@ -25,6 +26,7 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=255)
+     *
      */
     private $lastname;
 
@@ -32,6 +34,7 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255)
+     *
      */
     private $firstname;
 
@@ -39,25 +42,28 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=255)
+     *
      */
     private $country;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="date_of_birth", type="date")
+     * @Assert\Date()
      */
     private $dateOfBirth;
 
     /**
      * @ORM\ManyToOne(targetEntity="MDL\CoreBundle\Entity\Pricing")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $price;
 
     /**
      * @ORM\ManyToOne(targetEntity="MDL\CoreBundle\Entity\Registration", inversedBy="visitors")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $registration;
 

@@ -3,6 +3,7 @@
 namespace MDL\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Registration
@@ -25,6 +26,10 @@ class Registration
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\Email(
+     *     message = "email '{{ value }}' non valide.",
+     *     checkMX = true
+     * )
      */
     private $email;
 
@@ -32,6 +37,7 @@ class Registration
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date")
+     * @Assert\Date()
      */
     private $date;
 
@@ -39,6 +45,7 @@ class Registration
      * @var float
      *
      * @ORM\Column(name="total_price", type="float")
+     *
      */
     private $totalPrice;
 
@@ -46,6 +53,7 @@ class Registration
      * @var string
      *
      * @ORM\Column(name="registration_code", type="string", length=255, unique=true)
+     *
      */
     private $registrationCode;
 
@@ -53,6 +61,7 @@ class Registration
      * @var int
      *
      * @ORM\Column(name="nb_ticket", type="integer")
+     *
      */
     private $nbTicket;
 
@@ -60,11 +69,12 @@ class Registration
      * @var string
      *
      * @ORM\Column(name="ticket_duration", type="string", length=255)
+     *
      */
     private $ticketDuration;
 
     /**
-     * @ORM\OneToMany(targetEntity="MDL\CoreBundle\Entity\Visitor", mappedBy="registration")
+     * @ORM\OneToMany(targetEntity="MDL\CoreBundle\Entity\Visitor", mappedBy="registration", cascade={"persist"})
      */
     private $visitors;
 

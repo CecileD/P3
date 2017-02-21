@@ -31,6 +31,8 @@ class RegistrationType extends AbstractType
                 // Permet de changer le input en champs texte et non date (nécessaire pour le plugin)
                 'html5' => false,
 
+                'format' => 'dd/MM/yyyy',
+
                 // On ajoute un id pour la sélection jquery
             ))
             // Ajout du champ de sélection de la validité du ticket (journée ou demi-journée)
