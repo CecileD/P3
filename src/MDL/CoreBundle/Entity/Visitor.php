@@ -54,6 +54,11 @@ class Visitor
     private $dateOfBirth;
 
     /**
+     * @ORM\Column(name="reduced_pricing", type="boolean")
+     */
+    private $reducedPricing ;
+
+    /**
      * @ORM\ManyToOne(targetEntity="MDL\CoreBundle\Entity\Pricing")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid()
@@ -219,5 +224,29 @@ class Visitor
     public function getRegistration()
     {
         return $this->registration;
+    }
+
+    /**
+     * Set reducedPricing
+     *
+     * @param boolean $reducedPricing
+     *
+     * @return Visitor
+     */
+    public function setReducedPricing($reducedPricing)
+    {
+        $this->reducedPricing = $reducedPricing;
+
+        return $this;
+    }
+
+    /**
+     * Get reducedPricing
+     *
+     * @return boolean
+     */
+    public function getReducedPricing()
+    {
+        return $this->reducedPricing;
     }
 }

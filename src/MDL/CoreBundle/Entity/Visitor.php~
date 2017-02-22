@@ -3,6 +3,7 @@
 namespace MDL\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Visitor
@@ -25,6 +26,7 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=255)
+     *
      */
     private $lastname;
 
@@ -32,6 +34,7 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255)
+     *
      */
     private $firstname;
 
@@ -39,25 +42,33 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=255)
+     *
      */
     private $country;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(name="date_of_birth", type="date")
+     * @Assert\Date()
      */
     private $dateOfBirth;
 
     /**
+     * @ORM\Column(name="reduced_pricing", type="boolean")
+     */
+    private $reducedPricing ;
+
+    /**
      * @ORM\ManyToOne(targetEntity="MDL\CoreBundle\Entity\Pricing")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $price;
 
     /**
      * @ORM\ManyToOne(targetEntity="MDL\CoreBundle\Entity\Registration", inversedBy="visitors")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $registration;
 
@@ -189,5 +200,29 @@ class Visitor
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * Set registration
+     *
+     * @param \MDL\CoreBundle\Entity\Registration $registration
+     *
+     * @return Visitor
+     */
+    public function setRegistration(\MDL\CoreBundle\Entity\Registration $registration)
+    {
+        $this->registration = $registration;
+
+        return $this;
+    }
+
+    /**
+     * Get registration
+     *
+     * @return \MDL\CoreBundle\Entity\Registration
+     */
+    public function getRegistration()
+    {
+        return $this->registration;
     }
 }

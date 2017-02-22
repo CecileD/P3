@@ -4,6 +4,7 @@ namespace MDL\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use MDL\CoreBundle\Entity\Pricing;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,8 +38,13 @@ class VisitorType extends AbstractType
 
                 'placeholder' => array(
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
-                )
-        ));
+                ))
+            )
+            ->add('reducedPricing', CheckboxType::class, array(
+                'label'    => 'Tarif Réduit (applicable sur présentation d\'un justificatif lors de la validation des billets aux personnes éligibles : étudiant, employé du musée, d’un service du Ministère de la Culture, militaire).',
+                'required' => false,
+            ))
+        ;
         /*
 
         $builder->addEventListener(
