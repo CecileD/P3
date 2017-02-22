@@ -1,0 +1,51 @@
+{% extends "MDLCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    Paiement - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h2 class ="text-center">Paiement commande n°{{ registration.registrationCode }}</h2>
+
+    <p>Vous trouverez ici le récapitulatif de votre commande :</p>
+
+    <div class="table-respondive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-default">
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Tarif appliqué</th>
+                <th>Prix</th>
+            </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td colspan="3">Total</td>
+                    <td>{{ registration.totalPrice }}€</td>
+                </tr>
+            </tfoot>
+            <tbody>
+            {% for tableLine in tableLines %}
+                <tr scope="row">
+                    <td>{{ tableLine.nom }}</td>
+                    <td>{{ tableLine.prenom }}</td>
+                    <td>{{ tableLine.tarif }}</td>
+                    <td>{{ tableLine.prix }}€</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <p>Merci de rentrer vos informations de paiement pour finaliser la commande (vous recevrez vos billets par mail une fois le paiement finalisé) : </p>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
