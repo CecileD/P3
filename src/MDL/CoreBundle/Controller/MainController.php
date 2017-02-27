@@ -39,10 +39,21 @@ class MainController extends Controller
             //Récupération du service de réservation
             $registerSRV= $this->container->get('mdl_core.registration');
 
-            //Lancement de la réservation sur l'objet registration
-            $registerSRV->register($registration);
+            //On vérifie si la limite de billet pour cette journée n'a pas été atteinte
+            if($registerSRV->limitReached($registration) == true)
+            {
+                //Si elle a été atteinte on recharge la page en affichant un message d'erreur
+                $request->getSession()->getFlashBag()->add('error', 'Il n\'y a plus de tickets disponibles pour la journée sélectionnée');
+                return $this->render('MDLCoreBundle:Registration:registration.html.twig', array(
+                    'form' => $form->createView(),
+                ));
+            }else
+            {
+                //Sinon : lancement de la réservation sur l'objet registration
+                $registerSRV->register($registration);
+                return $this->redirectToRoute('mdl_core_payment', array('id' => $registration->getId()));
+            }
 
-            return $this->redirectToRoute('mdl_core_payment', array('id' => $registration->getId()));
         }
 
         return $this->render('MDLCoreBundle:Registration:registration.html.twig', array(
@@ -64,7 +75,7 @@ class MainController extends Controller
             throw new NotFoundHttpException("Réservation introuvable");
         }
 
-        // Récupération de la liste des candidatures de l'annonce
+        // Récupération des visiteurs
         $listVisitors = $em
             ->getRepository('MDLCoreBundle:Visitor')
             ->findBy(array('registration' => $registration))

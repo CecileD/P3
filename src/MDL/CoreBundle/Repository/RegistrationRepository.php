@@ -10,4 +10,24 @@ namespace MDL\CoreBundle\Repository;
  */
 class RegistrationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getVisitorNumberPerDate($date)
+    {
+        //On créé une requête qui va faire la somme du nombre de ticket réservé pour une date précise
+
+        $qb = $this->createQueryBuilder('r');
+
+        //On fait la somme des attributs nbTicket de toute les entités registration de la base ayant la date de réservation donnée en argument de cette fonction
+        $qb
+            ->select('SUM(r.nbTicket) as nbTicketRegistered')
+            ->where('r.date = :date')
+            ->setParameter('date', $date)
+
+        ;
+
+        //On retourne un nombre unique correspondant à la somme
+        return $qb
+            ->getQuery()
+            ->getSingleScalarResult()
+            ;
+    }
 }

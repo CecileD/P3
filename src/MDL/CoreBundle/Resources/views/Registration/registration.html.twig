@@ -17,6 +17,15 @@
 
     <p>Veuillez entrer les champs suivants pour réserver vos places pour visiter le musée du Louvre :</p>
 
+    {% if app.session.flashBag.has('error') %}
+        <div class="alert alert-danger">
+            <strong>Attention !</strong>
+            {% for msg in app.session.flashBag.get('error') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
 
     {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 

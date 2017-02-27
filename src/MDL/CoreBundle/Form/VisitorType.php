@@ -3,14 +3,12 @@
 namespace MDL\CoreBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use MDL\CoreBundle\Entity\Pricing;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 
 class VisitorType extends AbstractType
 {
@@ -26,8 +24,9 @@ class VisitorType extends AbstractType
             ->add('firstname', TextType::class, array(
                 'label' => 'Prénom',
             ))
-            ->add('country', TextType::class, array(
+            ->add('country', CountryType::class, array(
                 'label' => 'Pays',
+                'placeholder'=> 'France',
             ))
             ->add('dateOfBirth', BirthdayType::class, array(
                 'label' => 'Date de naissance',

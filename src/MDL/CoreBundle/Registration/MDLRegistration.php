@@ -97,5 +97,36 @@ class MDLRegistration
 
     }
 
+    public function limitReached(Registration $registration)
+    {
+        //On créé une variable qui va compter le nombre de visiteurs de la nouvelle réservation
+        $ticketNb=0;
+
+        //Pour chaque visiteur on ajoute un au compteur
+        foreach($registration->getVisitors() as $visitor)
+        {
+            $ticketNb++;
+        }
+
+
+        $repository = $this->em->getRepository('MDLCoreBundle:Registration');
+
+        //On récupère la date entré par l'utilisateur
+        $date = $registration->getDate();
+
+        //On récupère le nombre total de ticket réservé présent dans la base pour cette date
+        $dbTicketNb = $repository->getVisitorNumberPerDate($date);
+
+        //Le nombre de tickets dans la base ajouté au nombre de tickets total de la nouvelle réservation ne doit pas être supérieur à 1000
+        $currentTicketRegisteredNb = $dbTicketNb+$ticketNb;
+
+        if($currentTicketRegisteredNb<=1000)
+        {
+            return false;
+        }else
+        {
+            return true;
+        }
+    }
 
 }
