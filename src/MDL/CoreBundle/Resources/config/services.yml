@@ -2,3 +2,8 @@ services:
 #    mdl_core.example:
 #        class: MDL\CoreBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+    mdl_core.registration:
+        class: MDL\CoreBundle\Registration\MDLRegistration
+        arguments:
+            - "@doctrine.orm.entity_manager"

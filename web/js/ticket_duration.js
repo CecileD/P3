@@ -20,6 +20,7 @@ $(function()
         if($('#datepicker').datepicker('getFormattedDate') == formatedDate && now.getHours()>=14 )
         {
             $("select option:contains('Journée')").attr("disabled","disabled");
+            $("select option:contains('Journée')").attr("selected","false");
             $("select option:contains('Demi-journée')").attr("selected","true");
         }else{
             $("select option:contains('Journée')").prop("disabled", false);
