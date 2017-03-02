@@ -36,7 +36,7 @@ class MDLRegistration
         }
 
         //Génération d'un identifiant unique pour la réservation
-        $idRegistration = md5(uniqid(rand(), true));
+        $idRegistration = uniqid(rand(), true);
 
         //Concaténation de la date du jour du type de réservation et de l'id dans la BDD pour formé le code de réservation
         $registrationCode = ''. date_format($currentDate,'Y') .''.date_format($currentDate,'m').''.date_format($currentDate,'d').''.$dayCode.''.$idRegistration.'';

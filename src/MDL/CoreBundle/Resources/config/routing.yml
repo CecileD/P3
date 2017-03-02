@@ -11,3 +11,16 @@ mdl_core_payment:
     defaults: { _controller: MDLCoreBundle:Main:payment }
     requirements:
             id: \d+
+
+mdl_core_payment_checkout:
+    path:     /payment/checkout
+    defaults: { _controller: MDLCoreBundle:Main:paymentCheckout }
+
+mdl_core_confirmation:
+    path:     /confirmation/{id}
+    defaults: { _controller: MDLCoreBundle:Main:confirmation }
+    requirements:
+            id: \d+
+
+
+

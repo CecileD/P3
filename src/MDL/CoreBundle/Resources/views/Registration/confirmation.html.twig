@@ -1,0 +1,75 @@
+{% extends "MDLCoreBundle::layout.html.twig" %}
+
+{% block title %}
+    Paiement - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    <h2 class ="text-center">Commande n°{{ registration.registrationCode }}</h2>
+
+    {% if app.session.flashBag.has('error') %}
+        <div class="alert alert-danger">
+            <strong>Attention !</strong>
+            {% for msg in app.session.flashBag.get('error') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+        <p>Pour retoutner sur la page de paiement :</p>
+        <a href="{{ path('mdl_core_payment',{'id' : registration.id }) }}" class="btn btn-info">Retour au paiement</a>
+        <p>Veuillez contacter le service billetterie du musée pour plus d'informations.</p>
+
+    {% endif %}
+
+    {% if app.session.flashBag.has('success') %}
+        <div class="alert alert-success">
+            <strong>Succès !</strong>
+            {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+            {% endfor %}
+        </div>
+        <p>Vous allez recevoir sous peu un mail de confirmation de votre commande faisant foi de billets à l'entrée du musée.</p>
+    {% endif %}
+
+    <p>Vous trouverez ici le récapitulatif de votre commande :</p>
+
+    <div class="table-respondive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-default">
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Tarif appliqué</th>
+                <th>Prix</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <td colspan="3">Total</td>
+                <td>{{ registration.totalPrice }}€</td>
+            </tr>
+            </tfoot>
+            <tbody>
+            {% for tableLine in tableLines %}
+                <tr scope="row">
+                    <td>{{ tableLine.nom }}</td>
+                    <td>{{ tableLine.prenom }}</td>
+                    <td>{{ tableLine.tarif }}</td>
+                    <td>{{ tableLine.prix }}€</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

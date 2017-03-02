@@ -6,6 +6,23 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    <style>
+        body { font: 18px/1.5 sans-serif; }
+        h1, h2 { line-height: 1.2; margin: 0 0 .5em; }
+        h1 { font-size: 36px; }
+        h2 { font-size: 21px; margin-bottom: 1em; }
+        p { margin: 0 0 1em 0; }
+        a { color: #0000F0; }
+        a:hover { text-decoration: none; }
+        code { background: #F5F5F5; max-width: 100px; padding: 2px 6px; word-wrap: break-word; }
+        #welcome h1 span { display: block; font-size: 75%; }
+
+        @media (min-width: 768px) {
+            #status a, #next a { display: block; }
+            @-webkit-keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+            @keyframes fade-in { 0% { opacity: 0; } 100% { opacity: 1; } }
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -43,6 +60,22 @@
     </div>
 
     <p>Merci de rentrer vos informations de paiement pour finaliser la commande (vous recevrez vos billets par mail une fois le paiement finalisé) : </p>
+
+            <div id="status">
+                <p>
+                <form action="{{ path('mdl_core_payment',{'id' : registration.id }) }}" method="POST">
+                    <script
+                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key="pk_test"
+                            data-amount="{{ registration.totalPrice*100 }}"
+                            data-name="Réservation de {{ registration.nbTicket }} billet(s)"
+                            data-description="Pour le {{ registration.date|date("d/m/y") }}"
+                            data-locale="auto"
+                            data-currency="eur">
+                    </script>
+                </form>
+                </p>
+            </div>
 {% endblock %}
 
 

@@ -62,7 +62,7 @@ class MainController extends Controller
 
     }
 
-    public function paymentAction($id)
+    public function paymentAction($id, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -71,8 +71,15 @@ class MainController extends Controller
 
         // $advert est donc une instance de OC\PlatformBundle\Entity\Advert
         // ou null si l'id $id n'existe pas, d'où ce if :
-        if (null === $registration) {
-            throw new NotFoundHttpException("Réservation introuvable");
+        if (null === $registration || $registration->getPaid()=== 1) {
+            throw new NotFoundHttpException("Réservation introuvable ou déjà réglée");
+        }
+
+        if ($request->isMethod('POST'))
+        {
+            $paymentSRV= $this->container->get('mdl_core.stripepayment');
+            $paymentSRV->registrationPayment($registration->getTotalPrice()*100,$registration->getRegistrationCode(),$_POST['stripeToken'],$registration);
+            return $this->redirectToRoute('mdl_core_confirmation', array('id' => $registration->getId()));
         }
 
         // Récupération des visiteurs
@@ -90,6 +97,34 @@ class MainController extends Controller
         }
 
         $content = $this->get('templating')->render('MDLCoreBundle:Registration:payment.html.twig',array(
+            'tableLines'=>$tableLines,
+            'registration'=>$registration,
+        ));
+        return new Response($content);
+    }
+
+    public function confirmationAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $registration = $em->getRepository('MDLCoreBundle:Registration')->find($id);
+
+
+        // Récupération des visiteurs
+        $listVisitors = $em
+            ->getRepository('MDLCoreBundle:Visitor')
+            ->findBy(array('registration' => $registration))
+        ;
+
+        $tableLines = [];
+
+        foreach($listVisitors as $key=>$visitor )
+        {
+            $pricing = $visitor->getPrice();
+            $tableLines[$key]=array('nom'=>$visitor->getLastname(), 'prenom'=>$visitor->getFirstname(), 'tarif'=>$pricing->getType(), 'prix'=>$pricing->getPrice());
+        }
+
+        $content = $this->get('templating')->render('MDLCoreBundle:Registration:confirmation.html.twig',array(
             'tableLines'=>$tableLines,
             'registration'=>$registration,
         ));

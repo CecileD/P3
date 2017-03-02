@@ -66,6 +66,14 @@ class Registration
     private $nbTicket;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="paid", type="integer")
+     *
+     */
+    private $paid=0;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="ticket_duration", type="string", length=255)
@@ -273,5 +281,29 @@ class Registration
     public function getVisitors()
     {
         return $this->visitors;
+    }
+
+    /**
+     * Set paid
+     *
+     * @param integer $paid
+     *
+     * @return Registration
+     */
+    public function setPaid($paid)
+    {
+        $this->paid = $paid;
+
+        return $this;
+    }
+
+    /**
+     * Get paid
+     *
+     * @return integer
+     */
+    public function getPaid()
+    {
+        return $this->paid;
     }
 }

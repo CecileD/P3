@@ -7,3 +7,10 @@ services:
         class: MDL\CoreBundle\Registration\MDLRegistration
         arguments:
             - "@doctrine.orm.entity_manager"
+
+    mdl_core.stripepayment:
+        class: MDL\CoreBundle\Stripe\MDLStripePayment
+        arguments:
+            - "@session"
+            - "@router"
+            - "@doctrine.orm.entity_manager"
