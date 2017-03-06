@@ -12,5 +12,11 @@ services:
         class: MDL\CoreBundle\Stripe\MDLStripePayment
         arguments:
             - "@session"
-            - "@router"
             - "@doctrine.orm.entity_manager"
+            - "@mdl_core.mailerconfirmation"
+
+    mdl_core.mailerconfirmation:
+        class: MDL\CoreBundle\Mailer\MDLConfirmationMailer
+        arguments:
+            - "@mailer"
+            - "@templating"

@@ -75,13 +75,6 @@ class MainController extends Controller
             throw new NotFoundHttpException("Réservation introuvable ou déjà réglée");
         }
 
-        if ($request->isMethod('POST'))
-        {
-            $paymentSRV= $this->container->get('mdl_core.stripepayment');
-            $paymentSRV->registrationPayment($registration->getTotalPrice()*100,$registration->getRegistrationCode(),$_POST['stripeToken'],$registration);
-            return $this->redirectToRoute('mdl_core_confirmation', array('id' => $registration->getId()));
-        }
-
         // Récupération des visiteurs
         $listVisitors = $em
             ->getRepository('MDLCoreBundle:Visitor')
@@ -94,6 +87,13 @@ class MainController extends Controller
         {
             $pricing = $visitor->getPrice();
             $tableLines[$key]=array('nom'=>$visitor->getLastname(), 'prenom'=>$visitor->getFirstname(), 'tarif'=>$pricing->getType(), 'prix'=>$pricing->getPrice());
+        }
+
+        if ($request->isMethod('POST'))
+        {
+            $paymentSRV= $this->container->get('mdl_core.stripepayment');
+            $paymentSRV->registrationPayment($registration->getTotalPrice()*100,$registration->getRegistrationCode(),$_POST['stripeToken'],$registration,$tableLines);
+            return $this->redirectToRoute('mdl_core_confirmation', array('id' => $registration->getId()));
         }
 
         $content = $this->get('templating')->render('MDLCoreBundle:Registration:payment.html.twig',array(

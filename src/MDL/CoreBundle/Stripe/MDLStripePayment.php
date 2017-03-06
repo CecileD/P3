@@ -4,22 +4,23 @@ namespace MDL\CoreBundle\Stripe;
 
 use Doctrine\ORM\EntityManagerInterface;
 use MDL\CoreBundle\Entity\Registration;
-use Symfony\Component\Routing\RouterInterface;
+use MDL\CoreBundle\Mailer\MDLConfirmationMailer;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class MDLStripePayment
 {
     private $session;
-    private $router;
+    private $em;
+    private $confirmationMailer;
 
-    public function __construct(Session $session, RouterInterface $router, EntityManagerInterface $em)
+    public function __construct(Session $session, EntityManagerInterface $em, MDLConfirmationMailer $confirmationMailer)
     {
         $this->session = $session;
-        $this->router = $router;
         $this->em =$em;
+        $this->confirmationMailer = $confirmationMailer;
     }
 
-    public function registrationPayment($amount, $registrationNb, $stripeToken,Registration $registration)
+    public function registrationPayment($amount, $registrationNb, $stripeToken,Registration $registration, Array $tableLines)
     {
         \Stripe\Stripe::setApiKey("sk_test");
 
@@ -35,9 +36,11 @@ class MDLStripePayment
                 "description" => "Paiement Stripe - Réservation n°".$registrationNb
             ));
             $registration->setPaid(1);
+            $this->confirmationMailer->mailingConfirmation($registration, $tableLines);
             $this->em->persist($registration);
             $this->em->flush();
             $this->session->getFlashBag()->add("success","Paiement effectué avec succès ");
+
         } catch(\Stripe\Error\Card $e) {
             $registration->setPaid(0);
             $this->em->persist($registration);

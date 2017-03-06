@@ -1,0 +1,66 @@
+<html>
+<head>
+    <style>
+        table {
+            border: medium solid silver;
+            border-collapse: collapse;
+            width: 50%;
+            text-align: center;
+        }
+        th {
+            border: thin solid silver;
+            width: 50%;
+            padding: 5px;
+            background-color: #6495ed;
+        }
+        td {
+            border: thin solid silver;
+            width: 50%;
+            padding: 5px;
+            text-align: center;
+            background-color: #ffffff;
+        }
+        caption {
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <img src="{{ asset('img/logo.jpg') }}"/>
+
+    <h2>Commande n° {{ registration.registrationCode }} validée</h2>
+
+    <p>Votre réservation pour la journée du {{ registration.date |date("d/m/Y") }} a bien été eregistré et réglée.</p>
+
+    <p>Attention ! Ce mail fait office de billet à l'entrée du musée. Merci de le conserver et de le présenter le jour de votre visite.</p>
+
+    <p>Vous trouverez le récapitulatif de votre commande ici :</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Tarif appliqué</th>
+                <th>Prix</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="3">Total</td>
+                <td>{{ registration.totalPrice }}€</td>
+            </tr>
+        </tfoot>
+        <tbody>
+            {% for tableLine in tableLines %}
+                <tr>
+                    <td>{{ tableLine.nom }}</td>
+                    <td>{{ tableLine.prenom }}</td>
+                    <td>{{ tableLine.tarif }}</td>
+                    <td>{{ tableLine.prix }}€</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
