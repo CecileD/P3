@@ -12,6 +12,8 @@ $(function()
             addVisitor($container);
         }
 
+        initializeLabel();
+
         // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
         $('#add_visitor').click(function(e) {
             addVisitor($container);
@@ -42,6 +44,7 @@ $(function()
 
             // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
             index++;
+            countVisitors();
 
         }
 
@@ -49,16 +52,43 @@ $(function()
         function addDeleteLink($prototype) {
             // Création du lien
             var $deleteLink = $('<div class="col-sm-1"><a href="#" class="btn btn-danger supprimer" id="delete_'+index+'">Supprimer</a></div>');
-
             // Ajout du lien
             $prototype.append($deleteLink);
 
             // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
             $deleteLink.click(function(e) {
-                $prototype.remove();
-                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                //index--;
-                return false;
+                if(index>1)
+                {
+                    $prototype.remove();
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                    index--;
+                    countVisitors();
+                    return false;
+                }else
+                {
+                    alert('Il doit obligatoirement y avoir au moins un visiteur');
+                }
+
             });
         }
+
+        function countVisitors()
+        {
+            $("label:contains('Visiteur n°')").each(function(cpt)
+                {
+                    $(this).text();
+                    $(this).text('Visiteur n°'+(cpt+1));
+                }
+            );
+        }
+
+        function initializeLabel()
+        {
+            if($("label:contains('0')").length)
+            {
+                $("label:contains('0')").text('Visiteur n°1');
+                index++;
+            }
+        }
+
 });
