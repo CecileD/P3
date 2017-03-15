@@ -6,10 +6,6 @@ mdl_core_registration:
     path:     /registration
     defaults: { _controller: MDLCoreBundle:Main:registration }
 
-mdl_core_editRegistration:
-    path:     /editRegistration
-    defaults: { _controller: MDLCoreBundle:Main:editRegistration }
-
 mdl_core_payment:
     path:     /payment
     defaults: { _controller: MDLCoreBundle:Main:payment }

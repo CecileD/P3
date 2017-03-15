@@ -28,9 +28,11 @@ class MDLConfirmationMailer
             ->setFrom(array('b.aubin95@gmail.com'=>"MDL Service réservation"))
             ->setTo($registration->getEmail())
             ->setCharset('utf-8')
-            ->setContentType('text/html')
-            //->embed(\Swift_Image::fromPath('../web/img/logo.jpg'))
-            ->setBody($this->templating->render('MDLCoreBundle:SwiftLayout:ConfirmationMail.html.twig', array('registration'=>$registration, 'tableLines'=> $tableLines)));
+            ->setContentType('text/html');
+
+        $image = $message->embed(\Swift_Image::fromPath('../web/img/logo.jpg'));
+
+        $message->setBody($this->templating->render('MDLCoreBundle:SwiftLayout:ConfirmationMail.html.twig', array('registration'=>$registration, 'tableLines'=> $tableLines, 'image'=>$image)));
 
         $this->mailer->send($message);
     }

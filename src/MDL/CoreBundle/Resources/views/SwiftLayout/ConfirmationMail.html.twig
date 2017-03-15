@@ -1,66 +1,78 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <style>
-        table {
-            border: medium solid silver;
-            border-collapse: collapse;
-            width: 50%;
-            text-align: center;
-        }
-        th {
-            border: thin solid silver;
-            width: 50%;
-            padding: 5px;
-            background-color: #6495ed;
-        }
-        td {
-            border: thin solid silver;
-            width: 50%;
-            padding: 5px;
-            text-align: center;
-            background-color: #ffffff;
-        }
-        caption {
-            font-family: sans-serif;
-        }
-    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Mail de confirmation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body>
-    <img src="{{ absolute_url(asset('File:////C:/wamp/www/MDL/web/img/logo.jpg')) }}"/>
-
-    <h2>Commande n° {{ registration.registrationCode }} validée</h2>
-
-    <p>Votre réservation pour la journée du {{ registration.date |date("d/m/Y") }} a bien été eregistré et réglée.</p>
-
-    <p>Attention ! Ce mail fait office de billet à l'entrée du musée. Merci de le conserver et de le présenter le jour de votre visite.</p>
-
-    <p>Vous trouverez le récapitulatif de votre commande ici :</p>
-
-    <table>
-        <thead>
+<body style="margin: 0; padding: 0;">
+<table cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+        <table align="center" border="1" cellpadding="0" cellspacing="0" width="600">
             <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Tarif appliqué</th>
-                <th>Prix</th>
+                <td align="center" bgcolor="black" style="padding: 40px 0 30px 0;">
+                    <img src="{{ image }}" alt="Logo MDL" style="display: block;" />
+                </td>
             </tr>
-        </thead>
-        <tfoot>
             <tr>
-                <td colspan="3">Total</td>
-                <td>{{ registration.totalPrice }}€</td>
+                <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                        <tr>
+                            <td align="center">
+                                <h1>Musée du Louvre - Réservation de la {{ registration.ticketDuration }} du {{ registration.date |date("d/m/Y") }}</h1>
+
+                                <h2>Commande n° {{ registration.registrationCode }} validée</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <p>Votre réservation pour la journée du {{ registration.date |date("d/m/Y") }} a bien été enregistrée et réglée.</p>
+
+                                <p>Attention ! Ce mail fait office de billet à l'entrée du musée. Merci de le conserver et de le présenter le jour de votre visite.</p>
+
+                                <p>Vous trouverez le récapitulatif de votre commande ici :</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <table border="1" cellpadding="0" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr bgcolor="#696969" style="color: #E6E6E6">
+                                            <th>Nom</th>
+                                            <th>Prénom</th>
+                                            <th>Tarif appliqué</th>
+                                            <th>Prix</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for tableLine in tableLines %}
+                                        <tr>
+                                            <td>{{ tableLine.nom }}</td>
+                                            <td>{{ tableLine.prenom }}</td>
+                                            <td>{{ tableLine.tarif }}</td>
+                                            <td>{{ tableLine.prix }}€</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr bgcolor="#696969" style="color: #E6E6E6">
+                                            <td colspan="3">Total</td>
+                                            <td>{{ registration.totalPrice }}€</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
             </tr>
-        </tfoot>
-        <tbody>
-            {% for tableLine in tableLines %}
-                <tr>
-                    <td>{{ tableLine.nom }}</td>
-                    <td>{{ tableLine.prenom }}</td>
-                    <td>{{ tableLine.tarif }}</td>
-                    <td>{{ tableLine.prix }}€</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            <tr>
+                <td align="center" bgcolor="#696969" style="color: #E6E6E6">
+                    <p class="text-center">Musée du Louvre © {{ 'now'|date('Y') }} | Développé par Ben's Company</p>
+                </td>
+            </tr>
+        </table>
+    </tr>
+</table>
 </body>
 </html>
