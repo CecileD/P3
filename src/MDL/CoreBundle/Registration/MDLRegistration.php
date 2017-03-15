@@ -92,8 +92,8 @@ class MDLRegistration
         $registration->setTotalPrice($totalPrice);
 
         //On ajoute les données dans la bdd
-        $this->em->persist($registration);
-        $this->em->flush();
+        //$this->em->persist($registration);
+        //$this->em->flush();
 
     }
 

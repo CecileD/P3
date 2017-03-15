@@ -28,6 +28,8 @@
 {% block body %}
     <h2 class ="text-center">Paiement commande n°{{ registration.registrationCode }}</h2>
 
+    <p><a href="{{ path('mdl_core_editRegistration') }}"><button class="btn btn-danger"><i class="glyphicon glyphicon-chevron-left"></i> Modifier commande </button></a></p>
+
     <p>Vous trouverez ici le récapitulatif de votre commande :</p>
 
     <div class="table-respondive">

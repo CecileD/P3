@@ -37,7 +37,7 @@ class MDLStripePayment
             ));
             $registration->setPaid(1);
             $this->confirmationMailer->mailingConfirmation($registration, $tableLines);
-            $this->em->persist($registration);
+            $this->em->merge($registration);
             $this->em->flush();
             $this->session->getFlashBag()->add("success","Paiement effectué avec succès ");
 

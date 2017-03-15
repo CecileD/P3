@@ -14,6 +14,8 @@ $(function()
 
         initializeLabel();
 
+
+
         // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
         $('#add_visitor').click(function(e) {
             addVisitor($container);
@@ -84,11 +86,22 @@ $(function()
 
         function initializeLabel()
         {
-            if($("label:contains('0')").length)
-            {
-                $("label:contains('0')").text('Visiteur n°1');
-                index++;
-            }
-        }
+            var cpt =0;
 
+            $("label").each(function()
+            {
+                var test = $(this).text();
+                if($.isNumeric(test))
+                {
+                    $(this).text('Visiteur n°'+(cpt+1));
+                    cpt++;
+
+                    if(!$('#mdl_corebundle_registration_visitors_'+(cpt)+' > .supprimer').length)
+                    {
+                        addDeleteLink($(this).parent());
+                    }
+
+                }
+            });
+        }
 });

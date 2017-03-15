@@ -20,3 +20,8 @@ services:
         arguments:
             - "@mailer"
             - "@templating"
+
+    mdl_core.maketable:
+        class: MDL\CoreBundle\MakeTable\MDLMakeTable
+        arguments:
+            - "@session"
