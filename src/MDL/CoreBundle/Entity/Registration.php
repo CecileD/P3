@@ -83,6 +83,7 @@ class Registration
 
     /**
      * @ORM\OneToMany(targetEntity="MDL\CoreBundle\Entity\Visitor", mappedBy="registration", cascade={"persist"})
+     * @Assert\Valid()
      */
     private $visitors;
 

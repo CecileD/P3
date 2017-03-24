@@ -46,6 +46,7 @@ class MDLStripePayment
             $this->em->persist($registration);
             $this->em->flush();
             $this->session->getFlashBag()->add("error","Une erreur s'est produite lors du paiement");
+            $this->session->set('erreur',true);
             // The card has been declined
         }
     }

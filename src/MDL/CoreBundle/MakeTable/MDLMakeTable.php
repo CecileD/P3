@@ -2,6 +2,7 @@
 
 namespace MDL\CoreBundle\MakeTable;
 
+use MDL\CoreBundle\Entity\Registration;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class MDLMakeTable
@@ -11,9 +12,12 @@ class MDLMakeTable
         $this->session = $session;
     }
 
-    public function makeTable()
+    public function makeTable(Registration $registration=NULL)
     {
-        $registration = $this->session->get('réservation');
+        if(!isset($registration))
+        {
+            $registration = $this->session->get('réservation');
+        }
 
         $listVisitors = $registration->getVisitors();
 

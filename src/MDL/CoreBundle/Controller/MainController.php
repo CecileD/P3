@@ -13,7 +13,6 @@ use MDL\CoreBundle\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
@@ -100,18 +99,20 @@ class MainController extends Controller
 
     public function confirmationAction()
     {
-
-
+        //Changer requête
         $session = $this->get('session');
         $registration = $session->get('réservation');
 
         $tableLines = $this->container->get('mdl_core.maketable')->makeTable();
 
         if (null === $registration) {
-            throw new NotFoundHttpException("Erreur commande finalisée");
+            throw new NotFoundHttpException("Erreur commande inexistante ou finalisée");
         }
 
-        $this->get('session')->clear();
+        if(!$session->has('erreur'))
+        {
+            $this->get('session')->clear();
+        }
 
         $content = $this->get('templating')->render('MDLCoreBundle:Registration:confirmation.html.twig',array(
             'tableLines'=>$tableLines,

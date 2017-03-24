@@ -36,7 +36,7 @@ class MDLRegistration
         }
 
         //Génération d'un identifiant unique pour la réservation
-        $idRegistration = uniqid(rand(), true);
+        $idRegistration = uniqid(rand());
 
         //Concaténation de la date du jour du type de réservation et de l'id dans la BDD pour formé le code de réservation
         $registrationCode = ''. date_format($currentDate,'Y') .''.date_format($currentDate,'m').''.date_format($currentDate,'d').''.$dayCode.''.$idRegistration.'';
@@ -91,10 +91,6 @@ class MDLRegistration
         $registration->setNbTicket($ticketNb);
         $registration->setTotalPrice($totalPrice);
 
-        //On ajoute les données dans la bdd
-        //$this->em->persist($registration);
-        //$this->em->flush();
-
     }
 
     public function limitReached(Registration $registration)
@@ -108,13 +104,12 @@ class MDLRegistration
             $ticketNb++;
         }
 
-
         $repository = $this->em->getRepository('MDLCoreBundle:Registration');
 
         //On récupère la date entré par l'utilisateur
         $date = $registration->getDate();
 
-        //On récupère le nombre total de ticket réservé présent dans la base pour cette date
+        //On récupère le nombre total de tickets réservés présents dans la base pour cette date
         $dbTicketNb = $repository->getVisitorNumberPerDate($date);
 
         //Le nombre de tickets dans la base ajouté au nombre de tickets total de la nouvelle réservation ne doit pas être supérieur à 1000

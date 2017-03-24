@@ -26,7 +26,7 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=255)
-     *
+     * @Assert\Length(min=2, minMessage="Le nom doit faire au moins {{ limit }} caractères.")
      */
     private $lastname;
 
@@ -34,6 +34,7 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255)
+     * @Assert\Length(min=2, minMessage="Le prénom doit faire au moins {{ limit }} caractères.")
      *
      */
     private $firstname;

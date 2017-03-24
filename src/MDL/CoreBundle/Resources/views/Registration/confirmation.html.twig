@@ -37,6 +37,8 @@
 
     <p>Vous trouverez ici le récapitulatif de votre commande :</p>
 
+    <p>Réservation pour le {{ registration.date |date("d/m/Y") }}.</p>
+
     <div class="table-respondive">
         <table class="table table-bordered table-striped">
             <thead class="thead-default">
@@ -65,6 +67,8 @@
             </tbody>
         </table>
     </div>
+
+    <p>Type de réservation :  {{ registration.ticketDuration }}</p>
 
 
 {% endblock %}
