@@ -20,19 +20,22 @@ class MainController extends Controller
 {
     public function homeAction()
     {
+        //On génère la page à l'aide du template index
         $content = $this->get('templating')->render('MDLCoreBundle:Home:index.html.twig');
         return new Response($content);
     }
 
     public function registrationAction(Request $request)
     {
+        //Si l'entité réservation est définie en session
         if($this->get('session')->has('réservation'))
         {
+            //On récupère l'objet réservation
             $session = $this->get('session');
             $registration = $session->get('réservation');
         }else
         {
-            //Création d'une nouvelle réservation
+            //Sinon création d'une nouvelle réservation
             $registration = new Registration();
         }
 
@@ -63,6 +66,7 @@ class MainController extends Controller
 
         }
 
+        //On génère la page à l'aide du template registration
         return $this->render('MDLCoreBundle:Registration:registration.html.twig', array(
             'form' => $form->createView(),
         ));
@@ -71,25 +75,29 @@ class MainController extends Controller
 
     public function paymentAction(Request $request)
     {
-        // Pour récupérer une seule annonce, on utilise la méthode find($id)
+        // On récupère l'entité réservation stockée en session
         $session = $this->get('session');
         $registration = $session->get('réservation');
 
-        // $advert est donc une instance de OC\PlatformBundle\Entity\Advert
-        // ou null si l'id $id n'existe pas, d'où ce if :
+        //Si la réservation n'existe pas ou a déjà été réglée on affiche une erreur
         if (null === $registration || $registration->getPaid()=== 1) {
             throw new NotFoundHttpException("Réservation introuvable ou déjà réglée");
         }
 
+        //On créé le tableau récapitulatif de commande grâce au service makeTable
         $tableLines = $this->container->get('mdl_core.maketable')->makeTable();
 
         if ($request->isMethod('POST'))
         {
+            //Si le formulaire Stripe est POST on lance le paiement de la réservation
             $paymentSRV= $this->container->get('mdl_core.stripepayment');
             $paymentSRV->registrationPayment($registration->getTotalPrice()*100,$registration->getRegistrationCode(),$_POST['stripeToken'],$registration,$tableLines);
-            return $this->redirectToRoute('mdl_core_confirmation', array('id' => $registration->getId()));
+            $em = $this->getDoctrine()->getManager();
+            $id = $em->getRepository('MDLCoreBundle:Registration')->findOneBy(array('registrationCode'=>$registration->getRegistrationCode()))->getId();
+            return $this->redirectToRoute('mdl_core_confirmation', array('id' => $id));
         }
 
+        //On génère la page à l'aide du template payment
         $content = $this->get('templating')->render('MDLCoreBundle:Registration:payment.html.twig',array(
             'tableLines'=>$tableLines,
             'registration'=>$registration,
@@ -97,23 +105,27 @@ class MainController extends Controller
         return new Response($content);
     }
 
-    public function confirmationAction()
+    public function confirmationAction($id)
     {
-        //Changer requête
-        $session = $this->get('session');
-        $registration = $session->get('réservation');
+        //On récupère cette fois la réservation en base pour pouvoir recharger la page de confirmation même après la suppression de la session
+        $em = $this->getDoctrine()->getManager();
+        $registration = $em->getRepository('MDLCoreBundle:Registration')->find($id);
 
-        $tableLines = $this->container->get('mdl_core.maketable')->makeTable();
+        //On créé le tableau récapitulatif de commande grâce au service makeTable
+        $tableLines = $this->container->get('mdl_core.maketable')->makeTable($registration);
 
+        //En cas d'erreur d'URL on affiche une erreur 404
         if (null === $registration) {
             throw new NotFoundHttpException("Erreur commande inexistante ou finalisée");
         }
 
-        if(!$session->has('erreur'))
+        //Si le paiement ne s'est pas terminer sur une erreur, on vide la session
+        if(!$this->get('session')->has('erreur'))
         {
             $this->get('session')->clear();
         }
 
+        //On génère la page à l'aide du template confirmation
         $content = $this->get('templating')->render('MDLCoreBundle:Registration:confirmation.html.twig',array(
             'tableLines'=>$tableLines,
             'registration'=>$registration,

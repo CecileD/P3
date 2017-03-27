@@ -82,7 +82,7 @@ class Registration
     private $ticketDuration;
 
     /**
-     * @ORM\OneToMany(targetEntity="MDL\CoreBundle\Entity\Visitor", mappedBy="registration", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="MDL\CoreBundle\Entity\Visitor", mappedBy="registration", cascade={"merge"})
      * @Assert\Valid()
      */
     private $visitors;

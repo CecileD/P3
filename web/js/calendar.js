@@ -2,7 +2,7 @@ $(function()
 {
     var currentDate = new Date();
 
-    //Configuration du calendrier (langue, date désactivés
+    //Configuration du calendrier (langue, dates désactivés, fermeture automatique...)
     $('.hidden_zone').hide();
     $('#datepicker').datepicker(
         {
@@ -13,6 +13,8 @@ $(function()
             startDate : currentDate
         }
     );
+
+    //Récupération de la valeur choisie et formatage. Affichage de la suite du formulaire
     $('#datepicker').val();
     var pickedDate = $('#datepicker').datepicker('getFormattedDate');
     $('#datepicker').on('changeDate', function() {

@@ -26,7 +26,7 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="lastname", type="string", length=255)
-     *
+     * @Assert\Length(min=2, minMessage="Le nom doit faire au moins {{ limit }} caractères.")
      */
     private $lastname;
 
@@ -34,6 +34,7 @@ class Visitor
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255)
+     * @Assert\Length(min=2, minMessage="Le prénom doit faire au moins {{ limit }} caractères.")
      *
      */
     private $firstname;
@@ -66,7 +67,7 @@ class Visitor
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MDL\CoreBundle\Entity\Registration", inversedBy="visitors")
+     * @ORM\ManyToOne(targetEntity="MDL\CoreBundle\Entity\Registration", inversedBy="visitors", cascade={"merge"})
      * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid()
      */
@@ -224,5 +225,29 @@ class Visitor
     public function getRegistration()
     {
         return $this->registration;
+    }
+
+    /**
+     * Set reducedPricing
+     *
+     * @param boolean $reducedPricing
+     *
+     * @return Visitor
+     */
+    public function setReducedPricing($reducedPricing)
+    {
+        $this->reducedPricing = $reducedPricing;
+
+        return $this;
+    }
+
+    /**
+     * Get reducedPricing
+     *
+     * @return boolean
+     */
+    public function getReducedPricing()
+    {
+        return $this->reducedPricing;
     }
 }

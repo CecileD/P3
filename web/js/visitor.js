@@ -2,62 +2,61 @@ $(function()
 {
         // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
         var $container = $('div#mdl_corebundle_registration_visitors');
-        //$('div #mdl_corebundle_registration_visitors').after('<div class="form-group" style="margin-top: 10px"><a href="#" id="add_visitor" class="btn btn-default ">Ajouter un visiteur</a></div>');
 
         // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
         var index = $('#mdl_corebundle_registration_visitors').children().length;
 
-        // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+        // On ajoute un premier champ automatiquement si aucun n'est défini
         if (index == 0) {
             addVisitor($container);
         }
 
+        //On initialise les champs visiteurs existants (nom des labels, boutons supprimer...)
         initializeLabel();
 
 
 
-        // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+        // Ajoute un nouveau champ visiteur au clic
         $('#add_visitor').click(function(e) {
             addVisitor($container);
-            e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+            e.preventDefault();
             return false;
         });
 
 
-        // La fonction qui ajoute un formulaire CategoryType
+        // Fonction permettant l'ajout d'un champ visiteur
         function addVisitor($container) {
-            // Dans le contenu de l'attribut « data-prototype », on remplace :
-            // - le texte "__name__label__" qu'il contient par le label du champ
-            // - le texte "__name__" qu'il contient par le numéro du champ
+
             var template = $container.attr('data-prototype')
                     .replace(/__name__label__/g, 'Visiteur n°' + (index+1))
                     .replace(/__name__/g,        index)
                 ;
 
 
-            // On crée un objet jquery qui contient ce template
             var $prototype = $(template);
 
-            // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+            // On ajoute au prototype un lien pour pouvoir supprimer le visiteur
             addDeleteLink($prototype);
+
             // On ajoute le prototype modifié à la fin de la balise <div>
             $container.append($prototype);
 
-
-            // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+            // On incrémente le compteur pour pouvoir connaître le nombre de visiteurs courants dans la page
             index++;
+
+            //A chaque ajout on redéfini les numéros de label (permet d'éviter des numéros ne se suivant pas)
             countVisitors();
 
         }
 
-        // La fonction qui ajoute un lien de suppression d'une catégorie
+        // La fonction qui ajoute un lien de suppression d'un visiteur
         function addDeleteLink($prototype) {
             // Création du lien
             var $deleteLink = $('<div class="col-sm-1"><a href="#" class="btn btn-danger supprimer" id="delete_'+index+'">Supprimer</a></div>');
             // Ajout du lien
             $prototype.append($deleteLink);
 
-            // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
+            //On écoute le clic sur le bouton de suppression, si le nombre de visiteur est supérieur à un on supprime le visiteur associé au bouton.
             $deleteLink.click(function(e) {
                 if(index>1)
                 {
@@ -74,6 +73,7 @@ $(function()
             });
         }
 
+        //Fonction comptant le nombre de visiteurs et redéfinissant les numéros de label à l'ajout ou la suppression d'un visiteur
         function countVisitors()
         {
             $("label:contains('Visiteur n°')").each(function(cpt)
@@ -84,6 +84,7 @@ $(function()
             );
         }
 
+        //Fonction permettant d'initialiser les labels et les boutons suppression pour des visiteurs déjà existant lors du chargement de la page
         function initializeLabel()
         {
             var cpt =0;
@@ -100,7 +101,6 @@ $(function()
                     {
                         addDeleteLink($(this).parent());
                     }
-
                 }
             });
         }

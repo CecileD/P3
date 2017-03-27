@@ -1,10 +1,7 @@
 <?php
-
 namespace MDL\CoreBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * Visitor
  *
@@ -21,7 +18,6 @@ class Visitor
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      *
@@ -29,7 +25,6 @@ class Visitor
      * @Assert\Length(min=2, minMessage="Le nom doit faire au moins {{ limit }} caractères.")
      */
     private $lastname;
-
     /**
      * @var string
      *
@@ -38,7 +33,6 @@ class Visitor
      *
      */
     private $firstname;
-
     /**
      * @var string
      *
@@ -46,33 +40,28 @@ class Visitor
      *
      */
     private $country;
-
     /**
      * @var \DateTime
      * @ORM\Column(name="date_of_birth", type="date")
      * @Assert\Date()
      */
     private $dateOfBirth;
-
     /**
      * @ORM\Column(name="reduced_pricing", type="boolean")
      */
     private $reducedPricing ;
-
     /**
      * @ORM\ManyToOne(targetEntity="MDL\CoreBundle\Entity\Pricing")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid()
      */
     private $price;
-
     /**
      * @ORM\ManyToOne(targetEntity="MDL\CoreBundle\Entity\Registration", inversedBy="visitors")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\Valid()
      */
     private $registration;
-
     /**
      * Get id
      *
@@ -82,7 +71,6 @@ class Visitor
     {
         return $this->id;
     }
-
     /**
      * Set lastname
      *
@@ -93,10 +81,8 @@ class Visitor
     public function setLastname($lastname)
     {
         $this->lastname = $lastname;
-
         return $this;
     }
-
     /**
      * Get lastname
      *
@@ -106,7 +92,6 @@ class Visitor
     {
         return $this->lastname;
     }
-
     /**
      * Set firstname
      *
@@ -117,10 +102,8 @@ class Visitor
     public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
-
         return $this;
     }
-
     /**
      * Get firstname
      *
@@ -130,7 +113,6 @@ class Visitor
     {
         return $this->firstname;
     }
-
     /**
      * Set country
      *
@@ -141,10 +123,8 @@ class Visitor
     public function setCountry($country)
     {
         $this->country = $country;
-
         return $this;
     }
-
     /**
      * Get country
      *
@@ -154,7 +134,6 @@ class Visitor
     {
         return $this->country;
     }
-
     /**
      * Set dateOfBirth
      *
@@ -165,10 +144,8 @@ class Visitor
     public function setDateOfBirth($dateOfBirth)
     {
         $this->dateOfBirth = $dateOfBirth;
-
         return $this;
     }
-
     /**
      * Get dateOfBirth
      *
@@ -178,7 +155,6 @@ class Visitor
     {
         return $this->dateOfBirth;
     }
-
     /**
      * Set price
      *
@@ -189,10 +165,8 @@ class Visitor
     public function setPrice(\MDL\CoreBundle\Entity\Pricing $price)
     {
         $this->price = $price;
-
         return $this;
     }
-
     /**
      * Get price
      *
@@ -202,7 +176,6 @@ class Visitor
     {
         return $this->price;
     }
-
     /**
      * Set registration
      *
@@ -213,10 +186,8 @@ class Visitor
     public function setRegistration(\MDL\CoreBundle\Entity\Registration $registration)
     {
         $this->registration = $registration;
-
         return $this;
     }
-
     /**
      * Get registration
      *
@@ -226,7 +197,6 @@ class Visitor
     {
         return $this->registration;
     }
-
     /**
      * Set reducedPricing
      *
@@ -237,10 +207,8 @@ class Visitor
     public function setReducedPricing($reducedPricing)
     {
         $this->reducedPricing = $reducedPricing;
-
         return $this;
     }
-
     /**
      * Get reducedPricing
      *
