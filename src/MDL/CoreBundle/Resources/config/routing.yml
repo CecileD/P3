@@ -18,5 +18,5 @@ mdl_core_confirmation:
     path:     /confirmation/{id}
     defaults: { _controller: MDLCoreBundle:Main:confirmation }
     requirements:
-            id: \d+
+            id: "[a-zA-Z0-9]+"
 

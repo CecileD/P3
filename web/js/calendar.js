@@ -9,7 +9,7 @@ $(function()
             autoclose : true,
             language :"fr-FR",
             datesDisabled : ["01/05/yyyy","01/11/yyyy","25/12/yyyy"],
-            daysOfWeekDisabled : [2],
+            daysOfWeekDisabled : [2,0],
             startDate : currentDate
         }
     );

@@ -93,8 +93,8 @@ class MainController extends Controller
             $paymentSRV= $this->container->get('mdl_core.stripepayment');
             $paymentSRV->registrationPayment($registration->getTotalPrice()*100,$registration->getRegistrationCode(),$_POST['stripeToken'],$registration,$tableLines);
             $em = $this->getDoctrine()->getManager();
-            $id = $em->getRepository('MDLCoreBundle:Registration')->findOneBy(array('registrationCode'=>$registration->getRegistrationCode()))->getId();
-            return $this->redirectToRoute('mdl_core_confirmation', array('id' => $id));
+            //$id = $em->getRepository('MDLCoreBundle:Registration')->findOneBy(array('registrationCode'=>$registration->getRegistrationCode()))->getId();
+            return $this->redirectToRoute('mdl_core_confirmation', array('id' => $registration->getRegistrationCode()));
         }
 
         //On génère la page à l'aide du template payment
@@ -109,7 +109,7 @@ class MainController extends Controller
     {
         //On récupère cette fois la réservation en base pour pouvoir recharger la page de confirmation même après la suppression de la session
         $em = $this->getDoctrine()->getManager();
-        $registration = $em->getRepository('MDLCoreBundle:Registration')->find($id);
+        $registration = $em->getRepository('MDLCoreBundle:Registration')->findOneBy(array('registrationCode'=>$id));
 
         //On créé le tableau récapitulatif de commande grâce au service makeTable
         $tableLines = $this->container->get('mdl_core.maketable')->makeTable($registration);
