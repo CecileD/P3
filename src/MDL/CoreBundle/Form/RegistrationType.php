@@ -26,6 +26,8 @@ class RegistrationType extends AbstractType
 
             //Ajout du champ de sélection de la date (calendrier généré en jquery)
             ->add('date',      DateType::class, array(
+
+                'attr' => array('readonly' => true, 'onfocus'=>"this.blur()", 'style'=> "background:white;"),
                 'widget' => 'single_text',
 
                 // Permet de changer le input en champs texte et non date (nécessaire pour le plugin)
