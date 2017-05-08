@@ -22,7 +22,7 @@ class MDLStripePayment
 
     public function registrationPayment($amount, $registrationNb, $stripeToken,Registration $registration, Array $tableLines)
     {
-        \Stripe\Stripe::setApiKey("sk_test");
+        \Stripe\Stripe::setApiKey("sk_test_rbVoaIfJuVbE7JnmKS7Gwzvx");
 
         // On récupère les informations rentrées par l'utilisateur
         $token = $stripeToken;

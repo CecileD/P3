@@ -20,3 +20,7 @@ mdl_core_confirmation:
     requirements:
             id: "[a-zA-Z0-9]+"
 
+mdl_core_checkdate:
+    path:     /checkDate
+    defaults: { _controller: MDLCoreBundle:Main:checkDate }
+

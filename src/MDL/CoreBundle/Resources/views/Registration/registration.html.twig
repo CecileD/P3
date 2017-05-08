@@ -115,7 +115,60 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.fr.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/language/fr_FR.js"></script>
-    <script type="text/javascript" src="{{ asset('js/calendar.js') }}"></script>
+    <script type="text/javascript">
+        $(function()
+        {
+            var currentDate = new Date();
+
+            //Configuration du calendrier (langue, dates désactivés, fermeture automatique...)
+            $('.hidden_zone').hide();
+            $('#datepicker').datepicker(
+                {
+                    autoclose : true,
+                    language :"fr-FR",
+                    datesDisabled : ["01/05/yyyy","01/11/yyyy","25/12/yyyy"],
+                    daysOfWeekDisabled : [2,0],
+                    startDate : currentDate
+                }
+            );
+
+            //Récupération de la valeur choisie et formatage. Affichage de la suite du formulaire
+            $('#datepicker').val();
+
+            var pickedDate = $('#datepicker').datepicker('getFormattedDate');
+            $('#datepicker').on('changeDate', function() {
+                var date = $('#mdl_corebundle_registration_date').val();
+                date = date.split("/").reverse().join("-");
+                $.ajax({
+                    url: "{{path('mdl_core_checkdate')}}",
+                    method: "post",
+                    data : {date : date}
+                }).done(function(msg)
+                {
+                    dateChecking(msg);
+                });
+                $('#registration_date').val(pickedDate);
+                $('#date_selected').text(
+                    $('#datepicker').datepicker('getFormattedDate')
+                );
+            });
+
+
+            function dateChecking(msg) {
+                if($('.messageCheck'))
+                {
+                    $('.messageCheck').remove();
+                }
+                $('#mdl_corebundle_registration_date').parent().parent().append(jQuery.parseJSON(msg['reponse']));
+                if(jQuery.parseJSON(msg['limit']))
+                {
+                    $('.hidden_zone').hide();
+                }else{
+                    $('.hidden_zone').show();
+                }
+            }
+        });
+    </script>
     <script type="text/javascript" src="{{ asset('js/ticket_duration.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/visitor.js') }}"></script>
 {% endblock %}

@@ -11,6 +11,7 @@ namespace MDL\CoreBundle\Controller;
 use MDL\CoreBundle\Entity\Registration;
 use MDL\CoreBundle\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -132,4 +133,29 @@ class MainController extends Controller
         ));
         return new Response($content);
     }
+
+    public function checkDateAction(Request $req)
+    {
+        if($req->isXmlHttpRequest()) {
+            $date = $req->get('date');
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('MDLCoreBundle:Registration');
+
+            //On récupère le nombre total de tickets réservés présents dans la base pour cette date
+            $dbTicketNb = $repository->getVisitorNumberPerDate($date);
+            if($dbTicketNb>=1000)
+            {
+                $reponse = "<div class=\"col-sm-12 alert alert-danger messageCheck\" style='margin-top : 10px;'> Il n'y a plus de ticket pour cette journée </div>";
+                return new JsonResponse(array('reponse'=> json_encode($reponse), 'limit'=>true));
+            }else if((1000-$dbTicketNb)<=100){
+                $reponse = "<div class=\"col-sm-12 alert alert-warning messageCheck\" style='margin-top : 10px;'>Il reste ".(1000-$dbTicketNb)." billets pour cette journée</div>";
+                return new JsonResponse(array('reponse'=>json_encode ($reponse), 'limit'=>false));
+            }else{
+                $reponse = "<div class=\"col-sm-12 alert alert-success messageCheck\" style='margin-top : 10px;'>Il reste ".(1000-$dbTicketNb)." billets pour cette journée</div>";
+                return new JsonResponse(array('reponse'=>json_encode ($reponse), 'limit'=>false));
+            }
+        }
+        return new Response("Erreur : Erreur requête Ajax");
+    }
+
 }
